@@ -1,1 +1,17 @@
-console.log("Inicializando um projeto com TypeScript rodando no Node.js!");
+import express, { Request, Response } from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get("/", (req: Request, res: Response) => {
+  res.json({ message: "Bem-vindo a API MyExpenses!" });
+});
+
+app.listen(port, () => {
+  console.log(`API rodando em http://localhost:${port}`);
+});
