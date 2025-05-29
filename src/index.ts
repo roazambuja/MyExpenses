@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { errorHandler } from "./middlewares/error-handler";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth-routes";
+import usersRoutes from "./routes/users-routes";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/users", usersRoutes);
 
 app.use(errorHandler);
 
