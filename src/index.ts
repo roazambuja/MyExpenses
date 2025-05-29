@@ -3,6 +3,7 @@ import { errorHandler } from "./middlewares/error-handler";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth-routes";
 import usersRoutes from "./routes/users-routes";
+import { authenticate, authorizeAdmin } from "./middlewares/auth";
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/auth", authRoutes);
-app.use("/users", usersRoutes);
+app.use("/users", authenticate, authorizeAdmin, usersRoutes);
 
 app.use(errorHandler);
 
