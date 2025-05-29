@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { errorHandler } from "./middlewares/error-handler";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth-routes";
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ app.use(express.json());
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Bem-vindo a API MyExpenses!" });
 });
+
+app.use("/auth", authRoutes);
 
 app.use(errorHandler);
 
