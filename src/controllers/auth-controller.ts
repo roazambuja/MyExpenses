@@ -18,7 +18,7 @@ export class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body;
     // falta validação
-    const token = await this.service.autenticate({ email, password });
+    const token = await this.service.authenticate({ email, password });
     return res.json({ token });
   }
 }
