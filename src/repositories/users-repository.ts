@@ -5,14 +5,14 @@ export class UsersRepository {
   private static users: User[] = [
     {
       id: "27afa719-ccad-4308-b9d4-f8f49e669f21",
-      name: "Administrador",
-      email: "admin@email.com",
+      name: "Elesbão",
+      email: "elesbao@email.com",
       password: "$2b$10$KTgbAyvO3xlm0S37cNDnNOAPNJkjlJB.mWuNfnAklSLjnhLXJIzNq",
       role: "admin",
     },
   ];
 
-  create(userData: Omit<User, "id">): User {
+  async create(userData: Omit<User, "id">): Promise<User> {
     const newUser: User = {
       id: crypto.randomUUID(),
       ...userData,
@@ -21,27 +21,27 @@ export class UsersRepository {
     return newUser;
   }
 
-  findAll(): User[] {
+  async findAll(): Promise<User[]> {
     return UsersRepository.users;
   }
 
-  findById(id: string): User | undefined {
+  async findById(id: string): Promise<User | undefined> {
     return UsersRepository.users.find((user) => user.id === id);
   }
 
-  findByEmail(email: string): User | undefined {
+  async findByEmail(email: string): Promise<User | undefined> {
     return UsersRepository.users.find((user) => user.email === email);
   }
 
-  update(id: string, updatedData: Omit<User, "id">): User {
-    const user = this.findById(id);
+  async update(id: string, updatedData: Partial<User>): Promise<User> {
+    const user = await this.findById(id);
     if (!user) throw new NotFoundError("User not found.");
 
     Object.assign(user, updatedData);
     return user;
   }
 
-  delete(id: string): User {
+  async delete(id: string): Promise<User> {
     const index = UsersRepository.users.findIndex((user) => user.id === id);
     if (index === -1) throw new NotFoundError("User not found.");
 
