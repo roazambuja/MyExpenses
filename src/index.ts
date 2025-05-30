@@ -4,12 +4,14 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth-routes";
 import usersRoutes from "./routes/users-routes";
 import { authenticate, authorizeAdmin } from "./middlewares/auth";
+import helmet from "helmet";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(helmet());
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
