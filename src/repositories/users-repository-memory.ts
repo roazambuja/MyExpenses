@@ -1,13 +1,18 @@
 import { NotFoundError } from "../errors/not-found-error";
 import { User } from "../models/user";
+import { IUsersRepository } from "./users-repository-interface";
+import { hashPassword } from "../utils/jwt";
 
-export class UsersRepository {
+export class UsersRepository implements IUsersRepository {
+  // REPOSITÖRIO EM MEMÓRIA SIMPLES PARA FINS DE TESTES
+  // APENAS PARA USO EM DESENVOLVIMENTO, JAMAIS EM PRODUÇÃO
+  // POR ISSO PODEMOS EXPOR A SENHA!
   private static users: User[] = [
     {
-      id: "27afa719-ccad-4308-b9d4-f8f49e669f21",
+      id: crypto.randomUUID(),
       name: "Elesbão",
       email: "elesbao@email.com",
-      password: "$2b$10$KTgbAyvO3xlm0S37cNDnNOAPNJkjlJB.mWuNfnAklSLjnhLXJIzNq",
+      password: hashPassword("123456"),
       role: "admin",
     },
   ];
@@ -25,18 +30,17 @@ export class UsersRepository {
     return UsersRepository.users;
   }
 
-  async findById(id: string): Promise<User | undefined> {
-    return UsersRepository.users.find((user) => user.id === id);
+  async findById(id: string): Promise<User | null> {
+    return UsersRepository.users.find((user) => user.id === id) ?? null;
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
-    return UsersRepository.users.find((user) => user.email === email);
+  async findByEmail(email: string): Promise<User | null> {
+    return UsersRepository.users.find((user) => user.email === email) ?? null;
   }
 
   async update(id: string, updatedData: Partial<User>): Promise<User> {
     const user = await this.findById(id);
     if (!user) throw new NotFoundError("User not found.");
-
     Object.assign(user, updatedData);
     return user;
   }
