@@ -6,8 +6,6 @@ import usersRoutes from "./routes/users-routes";
 import { authenticate, authorizeAdmin } from "./middlewares/auth";
 import helmet from "helmet";
 
-dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 3000;
 
