@@ -34,4 +34,15 @@ export class ExpensesService {
     const expenses = await this.repository.findAllByUser(userId);
     return expenses;
   }
+
+  async getById(id: string, userId: string): Promise<Expense | null> {
+    const expense = await this.repository.findById(id);
+    if (!expense) throw new NotFoundError("Expense not found.");
+
+    if (expense.user !== userId) {
+      throw new UnauthorizedError("You do not have access to this expense.");
+    }
+
+    return expense;
+  }
 }

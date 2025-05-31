@@ -11,4 +11,9 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   await controller.getAllByUser(req, res);
 });
+
+router.get("/:id", async (req, res) => {
+  await controller.getById(req, res);
+});
+
 export default router;

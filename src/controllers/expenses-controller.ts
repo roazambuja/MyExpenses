@@ -24,4 +24,10 @@ export class ExpensesController {
     const expenses = await this.service.getAllByUser(req.user!.id);
     return res.json({ expenses });
   }
+
+  async getById(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const expense = await this.service.getById(id, req.user!.id);
+    return res.json({ expense });
+  }
 }
