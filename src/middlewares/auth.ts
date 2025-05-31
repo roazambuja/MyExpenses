@@ -27,3 +27,10 @@ export async function authorizeAdmin(req: Request, res: Response, next: NextFunc
   }
   next();
 }
+
+export async function authorizeUser(req: Request, res: Response, next: NextFunction) {
+  if (req.user && req.user.role !== "user") {
+    throw new UnauthorizedError("Users only.");
+  }
+  next();
+}
