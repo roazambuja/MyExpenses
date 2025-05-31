@@ -1,0 +1,22 @@
+import { Request, Response } from "express";
+import { expensesService } from "../container";
+import { ExpensesService } from "../services/expenses-service";
+import { createExpenseSchema } from "../schemas/expenses-schema";
+
+export class ExpensesController {
+  private service: ExpensesService;
+
+  constructor() {
+    this.service = expensesService;
+  }
+
+  async create(req: Request, res: Response): Promise<Response> {
+    const parsedBody = createExpenseSchema.safeParse(req.body);
+    if (!parsedBody.success) {
+      return res.status(400).json(parsedBody.error.flatten().fieldErrors);
+    }
+
+    const created = await this.service.create(parsedBody.data, req.user!.id);
+    return res.status(201).json({ created });
+  }
+}

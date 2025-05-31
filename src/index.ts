@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
 import { errorHandler } from "./middlewares/error-handler";
-import { authenticate, authorizeAdmin } from "./middlewares/auth";
+import { authenticate, authorizeAdmin, authorizeUser } from "./middlewares/auth";
 import authRoutes from "./routes/auth-routes";
 import usersRoutes from "./routes/users-routes";
+import expensesRoutes from "./routes/expenses-routes";
 import helmet from "helmet";
 import { env } from "./config/env";
 
@@ -17,6 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/auth", authRoutes);
 app.use("/users", authenticate, authorizeAdmin, usersRoutes);
+app.use("/expenses", authenticate, authorizeUser, expensesRoutes);
 
 app.use(errorHandler);
 
