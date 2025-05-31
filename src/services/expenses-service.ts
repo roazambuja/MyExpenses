@@ -29,4 +29,9 @@ export class ExpensesService {
 
     return created;
   }
+
+  async getAllByUser(userId: string): Promise<Expense[]> {
+    const expenses = await this.repository.findAllByUser(userId);
+    return expenses;
+  }
 }

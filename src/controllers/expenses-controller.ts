@@ -19,4 +19,9 @@ export class ExpensesController {
     const created = await this.service.create(parsedBody.data, req.user!.id);
     return res.status(201).json({ created });
   }
+
+  async getAllByUser(req: Request, res: Response): Promise<Response> {
+    const expenses = await this.service.getAllByUser(req.user!.id);
+    return res.json({ expenses });
+  }
 }

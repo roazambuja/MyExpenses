@@ -14,8 +14,8 @@ export class ExpensesRepository implements IExpensesRepository {
     return newExpense;
   }
 
-  async findAll(): Promise<Expense[]> {
-    return ExpensesRepository.expenses;
+  async findAllByUser(userId: string): Promise<Expense[]> {
+    return ExpensesRepository.expenses.filter((expense) => expense.user === userId);
   }
 
   async findById(id: string): Promise<Expense | null> {
