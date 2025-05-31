@@ -30,6 +30,6 @@ export const expenseSchema = z.object({
   user: z.string().uuid("User ID must be a valid UUID."),
 });
 
-export const createExpenseSchema = expenseSchema.omit({ id: true });
+export const createExpenseSchema = expenseSchema.omit({ id: true, user: true });
 
 export const updateExpenseSchema = createExpenseSchema.partial();
