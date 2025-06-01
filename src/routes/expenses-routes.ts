@@ -16,4 +16,8 @@ router.get("/:id", async (req, res) => {
   await controller.getById(req, res);
 });
 
+router.put("/:id", async (req, res) => {
+  await controller.update(req, res);
+});
+
 export default router;

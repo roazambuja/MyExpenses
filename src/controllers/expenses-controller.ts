@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { expensesService } from "../container";
 import { ExpensesService } from "../services/expenses-service";
-import { createExpenseSchema } from "../schemas/expenses-schema";
+import { createExpenseSchema, updateExpenseSchema } from "../schemas/expenses-schema";
 
 export class ExpensesController {
   private service: ExpensesService;
@@ -29,5 +29,17 @@ export class ExpensesController {
     const id = req.params.id;
     const expense = await this.service.getById(id, req.user!.id);
     return res.json({ expense });
+  }
+
+  async update(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const parsedBody = updateExpenseSchema.safeParse(req.body);
+
+    if (!parsedBody.success) {
+      return res.status(400).json(parsedBody.error.flatten().fieldErrors);
+    }
+
+    const updated = await this.service.update(id, parsedBody.data, req.user!.id);
+    return res.json({ updated });
   }
 }

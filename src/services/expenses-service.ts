@@ -45,4 +45,16 @@ export class ExpensesService {
 
     return expense;
   }
+
+  async update(id: string, data: updateExpenseData, userId: string): Promise<Expense> {
+    const expense = await this.repository.findById(id);
+    if (!expense) throw new NotFoundError("Expense not found.");
+
+    if (expense.user !== userId) {
+      throw new UnauthorizedError("You do not have access to this expense.");
+    }
+
+    const updated = await this.repository.update(id, data);
+    return updated;
+  }
 }
