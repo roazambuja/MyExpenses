@@ -42,4 +42,10 @@ export class ExpensesController {
     const updated = await this.service.update(id, parsedBody.data, req.user!.id);
     return res.json({ updated });
   }
+
+  async delete(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const deleted = await this.service.delete(id, req.user!.id);
+    return res.status(200).json({ deleted });
+  }
 }

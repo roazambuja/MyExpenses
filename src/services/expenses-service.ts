@@ -1,4 +1,3 @@
-import { ConflictError } from "../errors/conflict-error";
 import { NotFoundError } from "../errors/not-found-error";
 import { UnauthorizedError } from "../errors/unauthorized-error";
 import { z } from "zod";
@@ -56,5 +55,17 @@ export class ExpensesService {
 
     const updated = await this.repository.update(id, data);
     return updated;
+  }
+
+  async delete(id: string, userId: string): Promise<Expense> {
+    const expense = await this.repository.findById(id);
+    if (!expense) throw new NotFoundError("Expense not found.");
+
+    if (expense.user !== userId) {
+      throw new UnauthorizedError("You do not have access to this expense.");
+    }
+
+    const deleted = await this.repository.delete(id);
+    return deleted;
   }
 }

@@ -20,4 +20,8 @@ router.put("/:id", async (req, res) => {
   await controller.update(req, res);
 });
 
+router.delete("/:id", async (req, res) => {
+  await controller.delete(req, res);
+});
+
 export default router;
