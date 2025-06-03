@@ -6,5 +6,5 @@ export type Expense = {
   category: string;
   date: Date;
   type: ExpenseType;
-  user: string;
+  userId: string;
 };

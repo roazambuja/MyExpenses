@@ -1,4 +1,4 @@
-import { ExpensesRepository } from "./repositories/expenses-repository-memory";
+import { ExpensesRepository } from "./repositories/expenses-repository-prisma";
 import { UsersRepository } from "./repositories/users-repository-prisma";
 import { ExpensesService } from "./services/expenses-service";
 import { UsersService } from "./services/users-service";

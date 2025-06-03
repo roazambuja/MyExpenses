@@ -21,7 +21,7 @@ export class ExpensesController {
   }
 
   async getAllByUser(req: Request, res: Response): Promise<Response> {
-    const expenses = await this.service.getAllByUser(req.user!.id);
+    const expenses = await this.service.findAllByUser(req.user!.id);
     return res.json({ expenses });
   }
 

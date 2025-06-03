@@ -23,13 +23,13 @@ export class ExpensesService {
       category,
       date,
       type,
-      user: userId,
+      userId,
     });
 
     return created;
   }
 
-  async getAllByUser(userId: string): Promise<Expense[]> {
+  async findAllByUser(userId: string): Promise<Expense[]> {
     const expenses = await this.repository.findAllByUser(userId);
     return expenses;
   }
@@ -38,7 +38,7 @@ export class ExpensesService {
     const expense = await this.repository.findById(id);
     if (!expense) throw new NotFoundError("Expense not found.");
 
-    if (expense.user !== userId) {
+    if (expense.userId !== userId) {
       throw new UnauthorizedError("You do not have access to this expense.");
     }
 
@@ -49,7 +49,7 @@ export class ExpensesService {
     const expense = await this.repository.findById(id);
     if (!expense) throw new NotFoundError("Expense not found.");
 
-    if (expense.user !== userId) {
+    if (expense.userId !== userId) {
       throw new UnauthorizedError("You do not have access to this expense.");
     }
 
@@ -61,7 +61,7 @@ export class ExpensesService {
     const expense = await this.repository.findById(id);
     if (!expense) throw new NotFoundError("Expense not found.");
 
-    if (expense.user !== userId) {
+    if (expense.userId !== userId) {
       throw new UnauthorizedError("You do not have access to this expense.");
     }
 
