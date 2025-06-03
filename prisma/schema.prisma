@@ -18,6 +18,24 @@ model User {
   email    String @unique
   password String
   role     Role
+  expenses Expense[]
   
   @@map("users")
+}
+
+enum TransactionType {
+  expense
+  income
+}
+
+model Expense {
+  id       String   @id @default(uuid())
+  amount   Decimal
+  category String
+  date     DateTime
+  type     TransactionType
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+
+  @@map("expenses")
 }
