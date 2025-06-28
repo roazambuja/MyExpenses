@@ -123,7 +123,7 @@ São as rotas utilizadas para o gerenciamento dos registros de transações fina
     }
 ```
 
-- `PUT /expenses/:id` atualiza os dados da transação do id informado. Também é necessário enviar no corpo da requisição os campos que seram modificados:
+- `PUT /expenses/:id` atualiza os dados da transação do id informado. Também é necessário enviar no corpo da requisição os campos que serão modificados:
 
 ```
     {
